@@ -1,7 +1,10 @@
 package com.aop.chessgame;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -34,22 +37,25 @@ public class ChessGameApplication extends JFrame implements ChessGameListener, M
 	public ChessGameApplication() {
 		// Create Menus
 		createMenus();
-		//show the size and of window 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    setPreferredSize(new Dimension(800, 800));
-	    pack();
-	    setLocationRelativeTo(null);
-	    setVisible(true);
+		// show the size and of window
 		// create PlaceHolder for games/panes
+		this.getContentPane().setLayout(new BorderLayout());
 		this.placeHolder = new JPanel();
-		this.add(this.placeHolder);
+		this.getContentPane().add(this.placeHolder, BorderLayout.PAGE_START);
+		this.placeHolder.setBorder(BorderFactory.createLineBorder(Color.RED));
 		// Create Status bar
 		createStatusBar();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setPreferredSize(new Dimension(800, 800));
+		pack();
+		setLocationRelativeTo(null);
+		setVisible(true);
+
 	}
 
 	private void createStatusBar() {
 		statusBar = new JLabel();
-		this.add(statusBar);
+		this.getContentPane().add(statusBar, BorderLayout.PAGE_END);
 	}
 
 	private void createMenus() {
@@ -81,7 +87,8 @@ public class ChessGameApplication extends JFrame implements ChessGameListener, M
 	}
 
 	private void onJoinGame() {
-		// show a pane that asks for desthost, post and user name
+		// show a pane that asks for desthost, port and user name
+
 		this.placeHolder.removeAll();
 		this.placeHolder.add(new JoinGamePane(this));
 	}
@@ -90,6 +97,7 @@ public class ChessGameApplication extends JFrame implements ChessGameListener, M
 		// Show a pane that asks for username and port to listen on
 		this.placeHolder.removeAll();
 		this.placeHolder.add(new NewGamePane(this));
+		this.setStatus("Enter New Game Details");
 	}
 
 	/**
